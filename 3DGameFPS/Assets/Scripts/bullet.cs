@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
@@ -10,20 +10,25 @@ public class bullet : MonoBehaviour
 
     [SerializeField]
     private AudioClip hitSound;
-    
-    private void Start()
-    {
-    }
 
-    // Õ“Ë‚É’e‚ªÁ‚¦‚éˆ—
+    [SerializeField] private float bulletSpeed = 1f;//ï¿½eï¿½ÌƒXï¿½sï¿½[ï¿½h
+
+    /// <summary>
+    /// å¤–éƒ¨ã‹ã‚‰å¼¾ã®é€Ÿåº¦ã‚’å–å¾—ã™ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
+    /// </summary>
+   public float GetBulletSpeed
+    {
+        get { return bulletSpeed; }
+    }
+    // è¡çªæ™‚ã«å¼¾ãŒæ¶ˆãˆã‚‹å‡¦ç†
     private void OnCollisionEnter(Collision collision)
     {
-        // Õ“ËˆÊ’u‚Æ•\–Ê‚Ì–@üƒxƒNƒgƒ‹‚ğæ“¾
+        // è¡çªä½ç½®ã¨è¡¨é¢ã®æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
         ContactPoint contact = collision.contacts[0];
 
         if (hitEffectPrefab != null)
         {
-            // ƒqƒbƒgƒGƒtƒFƒNƒg‚ğÕ“ËˆÊ’u‚ÉA•\–Ê‚Ì•ûŒü‚É‡‚í‚¹‚Ä¶¬
+            // ãƒ’ãƒƒãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’è¡çªä½ç½®ã«ã€è¡¨é¢ã®æ–¹å‘ã«åˆã‚ã›ã¦ç”Ÿæˆ
             Instantiate(hitEffectPrefab,
                         contact.point,
                         Quaternion.LookRotation(contact.normal));
@@ -34,7 +39,7 @@ public class bullet : MonoBehaviour
         }
        
 
-        // ’e‚ğÁ‚·
+        // å¼¾ã‚’æ¶ˆã™
         Destroy(gameObject, 0.1f);
     }
 }
