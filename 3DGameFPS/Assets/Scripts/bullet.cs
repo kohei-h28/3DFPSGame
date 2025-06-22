@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     [SerializeField]
     private GameObject hitEffectPrefab;
 
     [SerializeField]
-    private float lifeTime = 5f;
+    private float lifeTime = 5f;//弾丸が消えるまでの時間
 
     [SerializeField]
-    private AudioClip hitSound;
+    private AudioClip hitSound;//弾丸に付与する効果音
 
-    [SerializeField] private float bulletSpeed = 1f;//�e�̃X�s�[�h
+    [SerializeField] private float bulletSpeed = 1f;//弾丸の速度
 
     /// <summary>
     /// 外部から弾の速度を取得するプロパティ
@@ -33,13 +33,14 @@ public class bullet : MonoBehaviour
                         contact.point,
                         Quaternion.LookRotation(contact.normal));
         }
-        if(hitSound != null)
-        {
-            AudioSource.PlayClipAtPoint(hitSound, contact.point);
-        }
-       
+        //
+        AudioSource.PlayClipAtPoint(hitSound, contact.point);
 
+        if (collision.gameObject.TryGetComponent<Health>(out Health health)) 
+        {
+            health.TakeDamage(1);
+        }
         // 弾を消す
-        Destroy(gameObject, 0.1f);
+        Destroy(this.gameObject, 0.1f);
     }
 }
