@@ -1,26 +1,92 @@
 using UnityEngine;
+using System.Collections;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Scriptable Objects/Weapon")]
-public class Weapon : ScriptableObject
+public class Weapon : MonoBehaviour
 {
-    /// <summary>
-    /// 武器のprefab
-    /// </summary>
-    public GameObject WeaponPrefab;
+    [SerializeField]
+    private WeaponData weaponData;
+    
+    [SerializeField]
+    private Transform shootPoint;
 
+    [SerializeField]
+    private GameObject bulletPrefabOverride;
     /// <summary>
-    /// 弾丸のprefab
+    /// 現在の残弾数
     /// </summary>
-    public GameObject BulletPrefab;
+    private int currentAmmo;
+    /// <summary>
+    /// 最後に発射された時間
+    /// </summary>
+    private float lastFireTime;
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool isReloading = false;
 
-    public float FireRate = 1f;
-    /// <summary>
-    /// 武器の弾の最大値
-    /// </summary>
-    public int MaxAmmo = 10;
+    public int GeyCurremtAmmo
+    {
+        get { return currentAmmo; }
 
-    /// <summary>
-    /// リロードの時間
-    /// </summary>
-    public float ReloadTime = 1.5f;
+    }
+
+    public int GetMaxAmmo
+    {
+        get { return weaponData.MaxAmmo;  }
+    }
+
+    private void OnEnable()
+    {
+
+        currentAmmo = weaponData.MaxAmmo;
+
+    }
+
+    public void Fire()
+    {
+        if (isReloading)
+        {
+            return;
+        }
+        if(Time.time - lastFireTime < 1f/ weaponData.FireRate)
+        {
+            return;
+        }
+        if(currentAmmo < 0)
+        {
+            return;
+        }
+        lastFireTime = Time.time;
+        //現在の残弾数をデクリメント(-１)します
+        currentAmmo--;
+
+        GameObject bullet = Instantiate(
+            bulletPrefabOverride != null ? 
+            bulletPrefabOverride : weaponData.BulletPrefab,
+            shootPoint.position,shootPoint.rotation
+            );
+        bullet.GetComponent<Rigidbody>().linearVelocity
+            = shootPoint.forward * 30f;
+
+    }
+
+    public void Reload()
+    {
+        //ローディング中　or 残弾数が最大だった場合
+        if (isReloading || currentAmmo == weaponData.MaxAmmo)
+        {
+            return;
+        }
+        StartCoroutine(ReloadCoroutine());
+    }
+
+    private IEnumerator ReloadCoroutine()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(weaponData.ReloadTime);
+        currentAmmo = weaponData .MaxAmmo;
+        isReloading = false;
+    }
+
+
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38e765d282399e84780b0e659c81034b, type: 3}
-  m_Name: Rifle_0
+  m_Name: Rifle_0 1
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 1896325306163511591, guid: 788fd540e79f3dd4fa309118425936ab, type: 3}
+  WeaponPrefab: {fileID: 1896325306163511591, guid: aacc5c21526aa2a48ba09195d91de682, type: 3}
   BulletPrefab: {fileID: 1245318275560869632, guid: 6432ac1229c743b44963bbbb13c27b67, type: 3}
   FireRate: 1
   MaxAmmo: 10
