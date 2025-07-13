@@ -6,6 +6,26 @@ public class PlayerInputRelay : MonoBehaviour
     [SerializeField]
     private WeaponSwitcher weaponSwitcher;
 
+    [SerializeField]
+    private PlayerAnimatorControl playerAnimatorControl;
+
+    [SerializeField]
+    private Animator weaponAnimator;
+    public void OnAiming(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            playerAnimatorControl.IsAiming = true;
+        }
+    }
+    public void OnAimEnd(InputValue value) 
+    {
+        if (!value.isPressed)
+        {
+            playerAnimatorControl.IsAiming = false;
+        }
+    }
+
     public void OnAttack(InputValue value)
     {
 
@@ -16,7 +36,8 @@ public class PlayerInputRelay : MonoBehaviour
         }
     }
     public void OnReload(InputValue value)
-    { // inputActionÇ…ê›íËÇ≥ÇÍÇΩReload(RÇ´Å[)Ç™âüÇ≥ÇÍÇΩÇÁ
+    {
+        playerAnimatorControl.ReloadingAnimation();
         weaponSwitcher.GetCurrentWeapon.Reload();
         Debug.Log("Reload");
     }
@@ -31,17 +52,6 @@ public class PlayerInputRelay : MonoBehaviour
         else if (inputValue.y < 0)
         {
             weaponSwitcher.Switch(-1);
-        }
-    }
-    public void OnAiming(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            Debug.Log("aim");
-        }
-        else
-        {
-            Debug.Log("Aimout");
         }
     }
 }

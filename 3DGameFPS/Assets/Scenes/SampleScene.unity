@@ -1310,6 +1310,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4817981520447920, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.86273056
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817981520447920, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.043577794
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817981520447920, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.49809623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817981520447920, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.07547918
+      objectReference: {fileID: 0}
     - target: {fileID: 95565753606369354, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
       propertyPath: m_Controller
       value: 
@@ -1324,7 +1340,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4140129689430690, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 972241857}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1805534705840986, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1117569355}
   m_SourcePrefab: {fileID: 100100000, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
 --- !u!4 &872850347 stripped
 Transform:
@@ -1384,6 +1403,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2602d847c19433b4db539c10a7924af8, type: 2}
   - {fileID: 11400000, guid: 81aabeda013b189439e54b6782fc562a, type: 2}
   weaponHolder: {fileID: 972241857}
+--- !u!1 &1117569353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1805534705840986, guid: c266c61b42ce56a4ca7e9190ef1209e3, type: 3}
+  m_PrefabInstance: {fileID: 872850346}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1818360609 &1117569355
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117569353}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 59.999825, z: -10.0000105}
+  m_RotationOffset: {x: 0, y: 59.999825, z: -10.0000105}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 520091361}
+    weight: 1
 --- !u!1 &1130339703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,6 +1811,8 @@ GameObject:
   - component: {fileID: 1454663012}
   - component: {fileID: 1454663013}
   - component: {fileID: 1454663014}
+  - component: {fileID: 1454663015}
+  - component: {fileID: 1454663016}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1886,6 +1932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   lookTransform: {fileID: 1454663006}
+  rotationConstraint: {fileID: 1454663016}
 --- !u!114 &1454663010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,6 +1989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 872850348}
   playerRigidbody: {fileID: 1454663008}
+  IsAiming: 0
 --- !u!114 &1454663014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,6 +2003,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSwitcher: {fileID: 972241858}
+  playerAnimatorControl: {fileID: 1454663013}
+  weaponAnimator: {fileID: 872850348}
+--- !u!114 &1454663015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454663002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902cc81830172aa419889e7074a8a33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoText: {fileID: 187071980}
+  weaponSwitcher: {fileID: 972241858}
+--- !u!1818360609 &1454663016
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454663002}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 0
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 0}
+    weight: 1
 --- !u!1 &1468099558
 GameObject:
   m_ObjectHideFlags: 0

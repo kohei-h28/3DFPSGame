@@ -1,5 +1,6 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Animations;//RotationConstraintç”¨
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
@@ -11,42 +12,57 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody playerRigidbody;
 
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚ªŒü‚¢‚Ä‚¢‚é•ûŒü‚ÌŠî€
-    /// ‹“_‘€ì‚ğ•ÊƒIƒuƒWƒFƒNƒg‚É”C‚¹‚Ä‚¢‚éê‡‚Í‚»‚ÌTransdform‚ğw’è
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‘ã„ã¦ã„ã‚‹æ–¹å‘ã®åŸºæº–
+    /// è¦–ç‚¹æ“ä½œã‚’åˆ¥ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ä»»ã›ã¦ã„ã‚‹å ´åˆã¯ãã®Transdformã‚’æŒ‡å®š
     /// </summary>
     [SerializeField]
     private Transform lookTransform;
+
+    [SerializeField]
+    private RotationConstraint rotationConstraint;//RotationConstraintå‚ç…§
+
+    private bool isAiming = false;//AimçŠ¶æ…‹ãƒ•ãƒ©ã‚°
 
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
 
-        // ƒJ[ƒ\ƒ‹‚Ìƒ‚[ƒh‚ğ•ÏX‚µAƒJ[ƒ\ƒ‹©‘Ì‚à”ñ•\¦‚É‚µ‚Ü‚·
+        // ã‚«ãƒ¼ã‚½ãƒ«ã®ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã—ã€ã‚«ãƒ¼ã‚½ãƒ«è‡ªä½“ã‚‚éè¡¨ç¤ºã«ã—ã¾ã™
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void FixedUpdate()
     {
-        // ‹“_‚Ì‘O•ûŒü‚ÌƒxƒNƒgƒ‹‚Æ‰E•ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾
+        // è¦–ç‚¹ã®å‰æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨å³æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
         Vector3 forward = lookTransform.forward;
         Vector3 right = lookTransform.right;
 
-        //ã‰º¬•ª‚ğœ‹‚µA’n–Ê‚É‚»‚Á‚½ˆÚ“®ƒxƒNƒgƒ‹‚É‚·‚é
+        //ä¸Šä¸‹æˆåˆ†ã‚’é™¤å»ã—ã€åœ°é¢ã«ãã£ãŸç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã«ã™ã‚‹
         forward.y = 0f;
         right.y = 0f;
 
-        // ³‹K‰»‚µ‚Ä•ûŒü‚ÌƒxƒNƒgƒ‹‚Æ‚µ‚Äˆµ‚¤(‘¬“x‚ğ“ˆê)
+        // æ­£è¦åŒ–ã—ã¦æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦æ‰±ã†(é€Ÿåº¦ã‚’çµ±ä¸€)
         forward.Normalize();
         right.Normalize();
 
-        // ‘OŒãA¶‰E‚ÌˆÚ“®“ü—Í‚É•ûŒüƒxƒNƒgƒ‹‚ğŠ|‚¯‚ÄˆÚ“®—Ê‚ğŒˆ’è
+        // å‰å¾Œã€å·¦å³ã®ç§»å‹•å…¥åŠ›ã«æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ›ã‘ã¦ç§»å‹•é‡ã‚’æ±ºå®š
         Vector3 move = forward * moveInput.y + right * moveInput.x;
         playerRigidbody.linearVelocity = move * moveSpeed;
-    }
 
+        //Aimä¸­ãªã‚‰RotationOffset.yã‚’60ã«ã€ãã†ã§ãªã‘ã‚Œã°0ã«
+        Vector3 offset = rotationConstraint.rotationOffset;
+        offset.y = isAiming ? 60f : 0f;
+        rotationConstraint.rotationOffset = offset;
+    }
     public void OnMove(InputValue movementValue)
     {
         moveInput = movementValue.Get<Vector2>();
+    }
+
+    //Aimå…¥åŠ›ç”¨ã®é–¢æ•°
+    public void OnAiming(InputValue value)
+    {
+        isAiming = value.isPressed;
     }
 }

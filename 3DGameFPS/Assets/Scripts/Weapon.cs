@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
     /// </summary>
     private bool isReloading = false;
 
-    public int GeyCurremtAmmo
+    public int GetCurremtAmmo
     {
         get { return currentAmmo; }
 
