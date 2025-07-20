@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -20,7 +21,11 @@ public class WeaponSwitcher : MonoBehaviour
     private GameObject[] weaponInstances;
 
     private int currentIndex = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [SerializeField]
+    public int maxAmmo = 30;//Œ»İ‚ÌÅ‘å’e”
+    [SerializeField]
+    public int totalAmmo = 30;//‚Á‚Ä‚¢‚é‘S’e”
     void Start()
     {
         //•Ší‚Ì‚Å‘¼‚Ì”‚¾‚¯AGameObject‚Ì”z—ñ‚ğì¬‚µ‚Ä‘ã“ü
@@ -49,6 +54,17 @@ public class WeaponSwitcher : MonoBehaviour
         currentIndex = (currentIndex + direcion + weaponInstances.Length)
             % weaponInstances.Length;
         weaponInstances[currentIndex].SetActive(true);
+    }
+    //Å‘å’e”‚ğ’Ç‰Á‚·‚éˆ—
+    public void AddTotalAmmo(int amount)
+    {
+        totalAmmo += amount;
+        Debug.Log("‘’e”‚ª‘‚¦‚Ü‚µ‚½" + totalAmmo);
+    }
+
+    internal void AddTotalAmmo(object ammoAmount)
+    {
+        throw new NotImplementedException();
     }
 
     public Weapon GetCurrentWeapon

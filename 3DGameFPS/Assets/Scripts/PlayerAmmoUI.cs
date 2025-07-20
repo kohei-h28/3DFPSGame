@@ -9,7 +9,9 @@ public class PlayerAmmoUI : MonoBehaviour
     //‡AWeaponSwitcher‚Ì•Ï”‚ğì¬
     [SerializeField]
     private WeaponSwitcher weaponSwitcher;
-
+    //TotalMaxAmmo‚Ì•Ï”‚ğì¬
+    [SerializeField]
+    private TextMeshProUGUI totalMaxAmmoText;
 
     void Update()
     {
@@ -19,6 +21,7 @@ public class PlayerAmmoUI : MonoBehaviour
         ammoText.text =
             $"{weaponSwitcher.GetCurrentWeapon.GetCurremtAmmo}" +
             $"/{weaponSwitcher.GetCurrentWeapon.GetMaxAmmo} ";
-
+        totalMaxAmmoText.text =
+            $"{weaponSwitcher.GetCurrentWeapon.GetTotalAmmo}";
     }
 }

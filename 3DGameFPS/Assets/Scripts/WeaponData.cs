@@ -23,4 +23,11 @@ public class WeaponData : ScriptableObject
     /// ƒŠƒ[ƒh‚ÌŠÔ
     /// </summary>
     public float ReloadTime = 1.5f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int MaxTotalAmmo = 30;
+
+
 }
