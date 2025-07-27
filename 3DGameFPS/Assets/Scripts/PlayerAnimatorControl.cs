@@ -18,7 +18,7 @@ public class PlayerAnimatorControl : MonoBehaviour
 
     public void ReloadingAnimation()
     {
-        playerAnimator.SetTrigger("Reloading");
+        playerAnimator.SetTrigger("Reload");
     }
 
     private void FixedUpdate()

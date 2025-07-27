@@ -8,7 +8,7 @@ public class PlayerShooting : Shooting
 {
 
     [SerializeField]
-    private TextMeshProUGUI bulletText;
+    private TextMeshProUGUI BulletText;
 
     /// <summary>
     /// ÉÅÉCÉìÉJÉÅÉâ
@@ -17,7 +17,7 @@ public class PlayerShooting : Shooting
 
     private void Start()
     {
-        bulletText.text = $"{maxBullets - bulletsFired}/{maxBullets}";
+        BulletText.text = $"{maxBullets - bulletsFired}/{maxBullets}";
         mainCamera = Camera.main;
     }
 
@@ -36,7 +36,12 @@ public class PlayerShooting : Shooting
         {
             Debug.Log($"hit:{hit.collider.name}");
         }
-        Shoot(mainCamera.transform.forward, bulletText);
-        bulletText.text = $"{maxBullets - bulletsFired}/{maxBullets}";
+        Shoot(mainCamera.transform.forward, BulletText);
+        BulletText.text = $"{maxBullets - bulletsFired}/{maxBullets}";
+    }
+    void Fire()
+    {
+        GameObject bullet = Instantiate(BulletPrefab, shootPoint.position, Quaternion.identity);
+        bullet.tag = "Bullet";
     }
 }

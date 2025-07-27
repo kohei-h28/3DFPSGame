@@ -4,7 +4,7 @@ public class AmmoBox : MonoBehaviour
 {
     // ‡@‰ñ•œ‚·‚é’e”‚ÌintŒ^‚Ì•Ï”
     [SerializeField]
-    public int ammoAmount = 10;
+    public int addAmmo = 10;
 
     //‡AOnTrggerEnter‚ÅPlayer‚ª“–‚½‚Á‚Ä‚«‚½‚ç
     //Player‚ÌŠK‘w‰º‚É‚ ‚éWeaponSwitcher‚ğæ“¾‚µ‚Ä
@@ -15,20 +15,12 @@ public class AmmoBox : MonoBehaviour
         //player‚É“–‚½‚Á‚½‚©Šm”F
         if (other.CompareTag("Player"))
         {
-            //Player‚ÌŠK‘w‰º‚É‚ ‚éWeaponSwitcher‚ğæ“¾
-            var weaponSwitcher =
-                other.GetComponentInChildren<WeaponSwitcher>();
-            if (weaponSwitcher != null)
+            if (other.CompareTag("Player"))
             {
-                //Å‘å’e”‚ğ’Ç‰Á
-                weaponSwitcher.AddTotalAmmo(ammoAmount);
-                //‚±‚ÌAmmoBox‚ğíœ
+                var weaponSwitcher =
+                    other.GetComponentInChildren<WeaponSwitcher>();
+                weaponSwitcher.GetCurrentWeapon.AddTotalAmmo(addAmmo);
                 Destroy(this.gameObject);
-            }
-            else
-            {
-                Debug.LogWarning
-                    ("weaponSwither‚ªplayer‚ÌŠK‘w‰º‚ÉŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
             }
         }
     }

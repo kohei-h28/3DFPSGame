@@ -1,84 +1,76 @@
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
+using Unity.Netcode;
+using UnityEngine.InputSystem;
 
-/// <summary>
-/// ゲームの状態管理
-/// </summary>
 public class FPSGameManager : MonoBehaviour
 {
-    /// <summary>
-    /// ゲームオーバーのUI
-    /// </summary>
-    [SerializeField]
-    private GameObject gameOverPanel;
+    public int score = 0;
+    public int targetCount = 0;
 
-    //①スコア用のint型の変数を用意してください
-    [SerializeField]
-    private int score = 0;
+    [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
-    //残りターゲット数
-    [SerializeField]
-    public int tagetCount = 0;
-
-    //ゲームオーバー時に表示されるUI
-    [SerializeField]
-    private GameObject gameOverUI;
-
-    //スコア表示用UI
-    [SerializeField]
-    private TextMeshProUGUI scoreText; // 修正: TextAlignment を Text に変更
-
+    [SerializeField] private NetworkManager networkManager;
     private bool isGameOver = false;
-    private int targetCount;
 
-    private void Start()
+    [System.Obsolete]
+    void Start()
     {
-        //ゲームオーバーUIは最初は非表示に
-        gameOverUI.SetActive(false);
+        MovingTarget[] targets = FindObjectsOfType<MovingTarget>(); // 修正: FindObjectsOfTypeを使用して配列を取得
+        targetCount = targets.Length;
+        Debug.Log("初期ターゲット数: " + targetCount);
+        foreach (var t in targets)
+        {
+            Debug.Log("ターゲット発見: " + t.name);
+        }
+
+        GameOverPanel.SetActive(false);
     }
 
-    //②スコア追加用のメソッドを作成してください。引数の値をスコア用の変数に追加
-    public void AddScore(int amonut)
+
+
+    // スコアを加算
+    public void AddScore(int amount)
     {
-        score += amonut;
-        Debug.Log("スコアが追加されました。現在のスコア: " + score);
+        score += amount;
+        Debug.Log("スコア加算: " + amount + "（現在スコア: " + score + "）");
     }
 
-    public int GetScore()
-    {
-        return score;
-    }
-    //ターゲット破壊時に呼び出す
+    // ターゲットが1体破壊されるごとに呼ばれる
     public void OnTargetDestroyed()
     {
+        if (isGameOver) return; //二重呼び出しを防止
+
         targetCount--;
 
-        if (targetCount <= 0 && !isGameOver)
+        if (targetCount <= 0)
         {
+            
             GameOver();
         }
     }
 
+    // ゲームオーバー処理
     public void GameOver()
     {
+        if (isGameOver) return;
+
         isGameOver = true;
-        Debug.Log("ゲームオーバー");
-        gameOverUI.SetActive(true);
-        scoreText.text = "Score: " + score; // 修正: TextAlignment ではなく Text を使用
-                                          // カーソルのモードを変更し、カーソル自体を表示します
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-        gameOverPanel.SetActive(true);
-        Time.timeScale = 0f; // 一時停止
+
+        if (GameOverPanel != null)
+        GameOverPanel.SetActive(true);
+
+        if (scoreText != null)
+        scoreText.text = "SCORE: " + score.ToString();
     }
 
-    public void Retry()
+    private void Update()
     {
-        Time.timeScale = 1f;
-        // BuildScene内のIndexでシーンをロードする
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Cキーでクライアントモードで接続する
+        if (Keyboard.current.cKey.isPressed)
+        {
+            networkManager.StartClient();
+        }
     }
 }
