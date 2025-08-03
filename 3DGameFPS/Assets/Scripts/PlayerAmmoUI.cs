@@ -13,6 +13,11 @@ public class PlayerAmmoUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI totalMaxAmmoText;
 
+    public void SetWeaponSwitcher(WeaponSwitcher weaponSwitcher)
+    {
+        this.weaponSwitcher = weaponSwitcher;
+    }
+
     void Update()
     {
         //TextMeshProUGUI‚Ì•Ï”‚ÌText‚É‘Î‚µ‚Ä

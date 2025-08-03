@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimatorControl : MonoBehaviour
@@ -34,4 +35,8 @@ public class PlayerAnimatorControl : MonoBehaviour
         playerAnimator.SetFloat("Speed",speed);
     }
 
+    internal void SetReload()
+    {
+        throw new NotImplementedException();
+    }
 }

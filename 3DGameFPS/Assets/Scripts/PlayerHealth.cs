@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : Health
@@ -17,5 +18,10 @@ public class PlayerHealth : Health
             // Sceneã‚©‚çFPSGameManager‚ğŒ©‚Â‚¯‚ÄGameOverƒƒ\ƒbƒh‚ğ”­‰Î‚³‚¹‚é
             FindAnyObjectByType<FPSGameManager>().GameOver();
         }
+    }
+
+    public static implicit operator PlayerHealth(PlayerHealthUI v)
+    {
+        throw new NotImplementedException();
     }
 }
